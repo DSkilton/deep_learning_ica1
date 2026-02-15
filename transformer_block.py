@@ -3,6 +3,8 @@ import tensorflow as tf
 class TransformerBlock(tf.keras.layers.Layer):
     def __init__(self, embed_dim, num_heads, feed_forward_dim, rate=0.1):
         super().__init__()
+        self.supports_masking = True
+        
         self.attention = tf.keras.layers.MultiHeadAttention(num_heads=num_heads, key_dim=embed_dim)
         self.feed_forward_network = tf.keras.Sequential([
             tf.keras.layers.Dense(feed_forward_dim, activation='relu'),
@@ -15,10 +17,11 @@ class TransformerBlock(tf.keras.layers.Layer):
         self.dropout_att = tf.keras.layers.Dropout(rate)
         self.dropout_ff = tf.keras.layers.Dropout(rate)
 
-    def call(self, inputs, training=None, mask=None):
-        attention_mask = tf.cast(mask[:, tf.newaxis, tf.newaxis, :], dtype=tf.float32)
+    def call(self, inputs, training=False, tensor_mask=None):
+        if tensor_mask is not None:
+            tensor_mask = tf.cast(tensor_mask[:, tf.newaxis, tf.newaxis, :], dtype=tf.float32)
 
-        attention_output = self.attention(inputs, inputs, attention_mask=attention_mask)
+        attention_output = self.attention(inputs, inputs, attention_mask=tensor_mask)
         attention_output = self.dropout_att(attention_output, training=training)
         output = self.layer_normalization_att(inputs + attention_output)
 
