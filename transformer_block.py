@@ -1,8 +1,9 @@
 import tensorflow as tf
 
+@tf.keras.utils.register_keras_serializable(package="Custom")
 class TransformerBlock(tf.keras.layers.Layer):
-    def __init__(self, embed_dim, num_heads, feed_forward_dim, rate=0.1):
-        super().__init__()
+    def __init__(self, embed_dim, num_heads, feed_forward_dim, rate=0.1, **kwargs):
+        super().__init__(**kwargs)
         self.supports_masking = True
         
         self.attention = tf.keras.layers.MultiHeadAttention(num_heads=num_heads, key_dim=embed_dim)
@@ -29,3 +30,13 @@ class TransformerBlock(tf.keras.layers.Layer):
         feed_forward_output = self.dropout_ff(feed_forward_output, training=training)
 
         return self.layer_normalization_ff(output + feed_forward_output)
+
+    def get_config(self):
+        config = super().get_config()
+        config.update({
+            "embed_dim": self.embed_dim,
+            "num_heads": self.num_heads,
+            "ff_dim": self.ff_dim,
+            "rate": self.rate,
+        })
+        return config
