@@ -39,4 +39,4 @@ class TransformerBlock(tf.keras.layers.Layer):
             "ff_dim": self.ff_dim,
             "rate": self.rate,
         })
-        return config
+    return config
