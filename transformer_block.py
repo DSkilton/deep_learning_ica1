@@ -2,18 +2,18 @@ import tensorflow as tf
 
 @tf.keras.utils.register_keras_serializable(package="Custom")
 class TransformerBlock(tf.keras.layers.Layer):
-    def __init__(self, embed_dim, num_heads, feed_forward_dim, rate=0.1, **kwargs):
+    def __init__(self, embed_dim, num_heads, ff_dim, rate=0.1, **kwargs):
         super().__init__(**kwargs)
         self.supports_masking = True
 
         self.embed_dim = embed_dim
         self.num_heads = num_heads
-        self.ff_dim = feed_forward_dim
+        self.ff_dim = ff_dim
         self.rate = rate
         
         self.attention = tf.keras.layers.MultiHeadAttention(num_heads=num_heads, key_dim=embed_dim // num_heads, name="multihead_attention")
         self.feed_forward_network = tf.keras.Sequential([
-            tf.keras.layers.Dense(feed_forward_dim, activation='relu'),
+            tf.keras.layers.Dense(ff_dim, activation='relu'),
             tf.keras.layers.Dense(embed_dim)
         ])
 
