@@ -205,3 +205,13 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# New duplicate-safe training protocol
+training_corpus/
+logs/
+results/
+m_bpe_group_split_v2.*
+m_uni_group_split_v2.*
+*_umap_two_model_comparison.html
+*.keras
+outputs/
