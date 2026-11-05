@@ -67,3 +67,19 @@ Run `python -m scripts.audit_data` to write `outputs/split_audit.json`
 with the measured source duplicate/conflict counts and zero-overlap assertions.
 The pull-request CI runs this audit on the committed parquet file, publishing
 a downloadable `duplicate-safe-split-audit` artifact.
+
+## Non-neural baseline
+
+`baseline_tfidf.py` fits a word/unigram+bigram TF-IDF vectoriser and balanced
+Logistic Regression **only on the same training split**, then reports validation
+macro-F1, per-class precision/recall and a confusion matrix:
+
+```bash
+python baseline_tfidf.py
+```
+
+This deliberately does **not** evaluate the test split by default. Once model
+selection is final, run `python baseline_tfidf.py --evaluate-test` once to
+obtain held-out test metrics. This reference is not a replacement for neural
+training, but establishes whether a complex model improves over a simpler
+control using exactly the same text partitions.
