@@ -62,3 +62,8 @@ and a TF-IDF/Logistic Regression baseline, and report a genuinely untouched
 test partition before claiming a winning architecture. Earlier recorded
 macro-F1 values are for historical reference only and cannot be compared
 directly with newly split results without a fresh run.
+
+Run `python -m scripts.audit_data` to write `outputs/split_audit.json`
+with the measured source duplicate/conflict counts and zero-overlap assertions.
+The pull-request CI runs this audit on the committed parquet file, publishing
+a downloadable `duplicate-safe-split-audit` artifact.
