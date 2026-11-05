@@ -1,0 +1,25 @@
+# Python / notebook
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+.venv/
+venv/
+env/
+*.egg-info/
+
+# ML experiment outputs (saved models already committed remain tracked)
+logs/
+checkpoints/
+runs/
+cache_pipeline/
+*.h5
+*.hdf5
+*_umap_*comparison.html
+tensorboard/
+
+# Generated training-only tokenisers and checkpoints
+m_bpe_v2.*
+m_uni_v2.*
+*.train.sha256
+*.keras
