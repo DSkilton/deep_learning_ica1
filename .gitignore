@@ -214,3 +214,4 @@ m_bpe_group_split_v2.*
 m_uni_group_split_v2.*
 *_umap_two_model_comparison.html
 *.keras
+outputs/
